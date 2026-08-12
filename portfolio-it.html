@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quinton Makombera — IT Support · Junior Web Developer · Digital Technology</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0A0A12;
+    --panel:#13131F;
+    --panel-2:#181828;
+    --border:#26263A;
+    --text:#F3F3F8;
+    --muted:#9494AC;
+    --violet:#8B5CF6;
+    --pink:#EC4899;
+    --grad:linear-gradient(135deg,var(--violet),var(--pink));
+    --radius:14px;
+    --sidebar-w:264px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion:reduce){
+    html{scroll-behavior:auto;}
+    *{animation-duration:.01ms !important; animation-iteration-count:1 !important; transition-duration:.01ms !important;}
+  }
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    line-height:1.65;
+  }
+  h1,h2,h3,.brand,nav a,.btn{font-family:'Plus Jakarta Sans',sans-serif;}
+  a{color:inherit; text-decoration:none;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--pink); outline-offset:3px; border-radius:4px;}
+  img{max-width:100%; display:block;}
+  .grad-text{background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent;}
+
+  /* ---------- SIDEBAR ---------- */
+  .sidebar{
+    position:fixed; top:0; left:0; bottom:0; width:var(--sidebar-w);
+    background:var(--panel); border-right:1px solid var(--border);
+    padding:28px 22px; display:flex; flex-direction:column; z-index:100;
+    overflow-y:auto;
+  }
+  .brand{display:flex; align-items:center; gap:10px; margin-bottom:36px;}
+  .brand-mark{
+    width:38px; height:38px; border-radius:10px; background:var(--grad);
+    display:flex; align-items:center; justify-content:center;
+    font-weight:800; font-size:15px; color:#0A0A12; flex-shrink:0;
+  }
+  .brand-name{font-weight:700; font-size:15px;}
+  .brand-role{font-size:11px; color:var(--muted);}
+  nav.sidenav{display:flex; flex-direction:column; gap:3px; margin-bottom:28px;}
+  nav.sidenav a{
+    padding:10px 14px; border-radius:9px; font-size:14px; font-weight:500;
+    color:var(--muted); transition:background .15s, color .15s;
+  }
+  nav.sidenav a:hover, nav.sidenav a.active{background:var(--panel-2); color:var(--text);}
+
+  .avail-card{
+    background:var(--panel-2); border:1px solid var(--border); border-left:3px solid var(--pink);
+    border-radius:var(--radius); padding:16px 18px;
+    margin-bottom:16px;
+  }
+  .avail-card .dot{width:8px; height:8px; background:#22e07a; border-radius:50%; display:inline-block; margin-right:6px; box-shadow:0 0 0 3px rgba(34,224,122,.18);}
+  .avail-card p{font-size:13px; color:var(--muted); font-weight:500; margin-top:8px; line-height:1.4;}
+
+  .sidebar-cta{
+    display:block; text-align:center; padding:11px; border-radius:9px;
+    border:1px solid var(--border); font-size:13px; font-weight:600;
+    margin-bottom:20px; color:var(--text);
+  }
+  .sidebar-cta:hover{border-color:var(--pink);}
+
+  .social-row{display:flex; gap:10px; margin-top:auto; padding-top:16px;}
+  .social-row a{
+    width:34px; height:34px; border:1px solid var(--border); border-radius:8px;
+    display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--muted);
+  }
+  .social-row a:hover{color:var(--text); border-color:var(--pink);}
+
+  .sidebar-toggle{display:none; position:fixed; top:16px; right:16px; z-index:200;
+    width:42px; height:42px; border-radius:10px; background:var(--panel); border:1px solid var(--border);
+    color:var(--text); font-size:18px;}
+
+  /* ---------- MAIN ---------- */
+  main{margin-left:var(--sidebar-w);}
+  .wrap{max-width:900px; margin:0 auto; padding:0 40px;}
+  section{padding:90px 0; border-bottom:1px solid var(--border);}
+  .eyebrow{font-size:12px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--pink); margin-bottom:12px;}
+  section h2{font-size:clamp(1.6rem,3vw,2.1rem); margin-bottom:14px;}
+  .section-intro{color:var(--muted); max-width:520px; margin-bottom:36px; font-size:15px;}
+
+  /* ---------- HERO ---------- */
+  .hero{padding-top:70px; display:grid; grid-template-columns:1.15fr 0.85fr; gap:40px; align-items:center;}
+  .hero-hello{font-size:15px; color:var(--muted); margin-bottom:10px;}
+  .hero h1{font-size:clamp(2.1rem,4.2vw,3.1rem); font-weight:800; line-height:1.1; margin-bottom:16px;}
+  .hero .role{font-size:16px; color:var(--muted); margin-bottom:22px; font-weight:500;}
+  .hero p.bio{color:var(--muted); max-width:460px; margin-bottom:30px; font-size:15px;}
+  .hero-ctas{display:flex; gap:12px; flex-wrap:wrap; margin-bottom:30px;}
+  .btn{padding:13px 22px; border-radius:10px; font-weight:600; font-size:14px; display:inline-block;}
+  .btn-primary{background:var(--grad); color:#0A0A12;}
+  .btn-primary:hover{filter:brightness(1.08);}
+  .btn-ghost{border:1px solid var(--border); color:var(--text);}
+  .btn-ghost:hover{border-color:var(--pink);}
+  .badge-row{display:flex; gap:8px; flex-wrap:wrap;}
+  .badge-row span{
+    font-size:12px; padding:6px 12px; border:1px solid var(--border); border-radius:999px; color:var(--muted);
+  }
+  .skills-chip-row{display:flex; flex-wrap:wrap; gap:8px; margin-top:18px;}
+  .skills-chip-row span{
+    font-size:12.5px; padding:7px 13px; border-radius:8px; background:var(--panel);
+    border:1px solid var(--border); color:var(--text); font-weight:500;
+  }
+  .skills-chip-row span:first-child{background:var(--grad); color:#0A0A12; font-weight:700; border-color:transparent;}
+
+  /* Signature: gradient avatar ring with orbiting service marks */
+  .avatar-wrap{position:relative; width:260px; height:260px; margin:0 auto;}
+  .avatar-ring{
+    position:absolute; inset:0; border-radius:50%;
+    background:conic-gradient(from 0deg, var(--violet), var(--pink), var(--violet));
+    padding:3px; animation:spin 28s linear infinite;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .avatar-core{
+    width:100%; height:100%; border-radius:50%; background:var(--bg);
+    display:flex; align-items:center; justify-content:center;
+  }
+  .avatar-initials{
+    font-size:64px; font-weight:800; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .orbit-item{
+    position:absolute; width:46px; height:46px; border-radius:12px; background:var(--panel);
+    border:1px solid var(--border); display:flex; align-items:center; justify-content:center;
+    font-size:18px; animation:float 7s ease-in-out infinite;
+  }
+  .orbit-item:nth-child(1){top:-14px; left:50%; transform:translateX(-50%); animation-delay:0s;}
+  .orbit-item:nth-child(2){top:50%; right:-18px; transform:translateY(-50%); animation-delay:1.2s;}
+  .orbit-item:nth-child(3){bottom:-14px; left:50%; transform:translateX(-50%); animation-delay:2.4s;}
+  .orbit-item:nth-child(4){top:50%; left:-18px; transform:translateY(-50%); animation-delay:3.6s;}
+  @keyframes float{0%,100%{transform:translateY(0) translateX(var(--tx,0));} 50%{transform:translateY(-4px) translateX(var(--tx,0));}}
+
+  /* ---------- SERVICES ---------- */
+  .services-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:16px;}
+  .service-card{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); padding:24px; transition:border-color .15s, transform .15s;}
+  .service-card:hover{border-color:var(--pink); transform:translateY(-3px);}
+  .service-icon{width:42px; height:42px; border-radius:11px; background:var(--grad); display:flex; align-items:center; justify-content:center; font-size:18px; margin-bottom:14px;}
+  .service-card h3{font-size:16px; margin-bottom:6px;}
+  .service-card p{font-size:13.5px; color:var(--muted);}
+
+  /* ---------- PORTFOLIO ---------- */
+  .tabs{display:flex; gap:8px; margin-bottom:28px; flex-wrap:wrap;}
+  .tab{font-size:13px; font-weight:600; padding:9px 16px; border-radius:999px; border:1px solid var(--border); color:var(--muted); background:transparent; cursor:pointer;}
+  .tab.active{background:var(--grad); color:#0A0A12; border-color:transparent;}
+  .project-panel{display:none;}
+  .project-panel.active{display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:18px;}
+  .p-card{background:var(--panel); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; transition:border-color .15s, transform .15s;}
+  .p-card:hover{border-color:var(--pink); transform:translateY(-3px);}
+  .p-card img{width:100%; height:170px; object-fit:cover; object-position:top;}
+  .p-card .p-noimg{width:100%; height:170px; background:var(--panel-2); display:flex; align-items:center; justify-content:center; font-size:13px; color:var(--muted); font-weight:600;}
+  .p-body{padding:18px;}
+  .p-body h3{font-size:15px; margin-bottom:5px;}
+  .p-tag{font-size:11px; color:var(--pink); font-weight:600; margin-bottom:8px; text-transform:uppercase; letter-spacing:.06em;}
+  .p-body p{font-size:13px; color:var(--muted); margin-bottom:10px;}
+  .p-body .links{display:flex; gap:14px; font-size:12px; font-weight:600;}
+  .p-body .links a{color:var(--violet);}
+  .p-note{font-size:11px; color:#54546a; margin-top:2px;}
+
+  /* ---------- QUICK FACTS ---------- */
+  .facts-strip{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--border); border:1px solid var(--border); border-radius:var(--radius); overflow:hidden; margin-top:44px;}
+  .fact{background:var(--panel); padding:22px; text-align:center;}
+  .fact strong{display:block; font-size:20px; font-weight:800; background:var(--grad); -webkit-background-clip:text; background-clip:text; color:transparent; margin-bottom:4px;}
+  .fact span{font-size:11.5px; color:var(--muted);}
+
+  /* ---------- CONTENT / TUTORIALS ---------- */
+  .content-block{display:grid; grid-template-columns:1fr 1fr; gap:28px; align-items:center;}
+  .content-block img{border-radius:var(--radius); border:1px solid var(--border);}
+  .content-text h3{font-size:18px; margin-bottom:10px;}
+  .content-text p{color:var(--muted); font-size:14px; margin-bottom:16px;}
+  .platform-links{display:flex; gap:10px; flex-wrap:wrap;}
+  .platform-links a{font-size:13px; font-weight:600; padding:9px 16px; border:1px solid var(--border); border-radius:9px;}
+  .platform-links a:hover{border-color:var(--pink);}
+
+  /* ---------- EXPERIENCE ---------- */
+  .exp-item{border-top:1px solid var(--border); padding:22px 0; display:grid; grid-template-columns:130px 1fr; gap:20px;}
+  .exp-item:last-child{border-bottom:1px solid var(--border);}
+  .exp-time{font-size:12.5px; color:var(--pink); font-weight:600;}
+  .exp-item h3{font-size:16px; margin-bottom:3px;}
+  .exp-org{font-size:12.5px; color:var(--muted); margin-bottom:10px;}
+  .exp-item ul{padding-left:18px; color:var(--muted); font-size:13.5px;}
+  .exp-item li{margin-bottom:4px;}
+
+  /* ---------- CONTACT ---------- */
+  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:28px;}
+  .contact-info-card{background:var(--grad); border-radius:var(--radius); padding:28px; color:#0A0A12;}
+  .contact-info-card h3{font-size:18px; margin-bottom:16px;}
+  .contact-info-card a, .contact-info-card div.line{display:block; font-size:14px; font-weight:600; margin-bottom:10px; color:#0A0A12;}
+  form{display:flex; flex-direction:column; gap:12px;}
+  form input, form textarea{
+    background:var(--panel); border:1px solid var(--border); border-radius:9px; padding:13px 14px;
+    color:var(--text); font-family:'Inter',sans-serif; font-size:14px;
+  }
+  form input:focus, form textarea:focus{outline:none; border-color:var(--pink);}
+  form textarea{resize:vertical; min-height:100px;}
+  form button{border:none; cursor:pointer;}
+  .form-note{font-size:11.5px; color:#54546a; margin-top:-4px;}
+
+  footer{margin-left:var(--sidebar-w); text-align:center; padding:30px; color:var(--muted); font-size:12.5px;}
+
+  @media (max-width:980px){
+    .hero{grid-template-columns:1fr; text-align:left;}
+    .avatar-wrap{margin:20px 0 0;}
+    .services-grid{grid-template-columns:1fr;}
+    .content-block{grid-template-columns:1fr;}
+    .contact-grid{grid-template-columns:1fr;}
+    .facts-strip{grid-template-columns:repeat(2,1fr);}
+  }
+  @media (max-width:760px){
+    :root{--sidebar-w:0px;}
+    .sidebar{transform:translateX(-100%); transition:transform .25s ease; width:240px; z-index:150;}
+    .sidebar.open{transform:translateX(0);}
+    .sidebar-toggle{display:block;}
+    main, footer{margin-left:0;}
+    .wrap{padding:0 22px;}
+    .exp-item{grid-template-columns:1fr;}
+  }
+</style>
+</head>
+<body>
+
+<button class="sidebar-toggle" id="sidebarToggle" aria-label="Toggle menu">☰</button>
+
+<aside class="sidebar" id="sidebar">
+  <div class="brand">
+    <div class="brand-mark">QM</div>
+    <div>
+      <div class="brand-name">Quinton Makombera</div>
+      <div class="brand-role">IT Support · Junior Web Developer</div>
+    </div>
+  </div>
+
+  <nav class="sidenav">
+    <a href="#home" class="active">Home</a>
+    <a href="#about">About</a>
+    <a href="#services">Services</a>
+    <a href="#portfolio">Portfolio</a>
+    <a href="#content">Content</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <div class="avail-card">
+    <span><span class="dot"></span>Open to work</span>
+    <p>Available for entry-level IT roles &amp; freelance web/design projects</p>
+  </div>
+
+  <a class="sidebar-cta" href="#contact">Download CV — coming soon</a>
+
+  <div class="social-row">
+    <a href="#" title="GitHub">GH</a>
+    <a href="#" title="LinkedIn">in</a>
+    <a href="#" title="YouTube — tech tips channel">YT</a>
+    <a href="#" title="TikTok @meshtech254">TT</a>
+  </div>
+</aside>
+
+<main>
+  <div class="wrap">
+
+    <section class="hero" id="home">
+      <div>
+        <div class="hero-hello">Hello, I'm</div>
+        <h1>Quinton <span class="grad-text">Makombera</span></h1>
+        <div class="role">IT SUPPORT&nbsp;&nbsp;|&nbsp;&nbsp;JUNIOR WEB DEVELOPER&nbsp;&nbsp;|&nbsp;&nbsp;DIGITAL TECHNOLOGY</div>
+        <p class="bio">Tech-savvy and creative junior IT professional with hands-on experience in web development, IT support, graphic design and customer service. Skilled in building digital projects, troubleshooting computer issues and learning new technologies quickly. Seeking an internship or trainee opportunity to gain professional experience and contribute to a growing technology team.</p>
+        <div class="hero-ctas">
+          <a class="btn btn-primary" href="#portfolio">View my work →</a>
+          <a class="btn btn-ghost" href="#contact">Get in touch</a>
+        </div>
+        <div class="badge-row">
+          <span>Based in Harare, ZW</span>
+          <span>O-Level 2024 · 6 passes</span>
+          <span>Freelancing since 2022</span>
+        </div>
+        <div class="skills-chip-row">
+          <span>IT Support &amp; Troubleshooting</span>
+          <span>Windows / Software Installation</span>
+          <span>HTML &amp; CSS</span>
+          <span>JavaScript</span>
+          <span>Python</span>
+          <span>Web Development</span>
+          <span>Microsoft Office</span>
+          <span>Git &amp; GitHub</span>
+          <span>Graphic Design</span>
+          <span>Customer Support</span>
+          <span>Social Media Management</span>
+        </div>
+      </div>
+      <div class="avatar-wrap">
+        <div class="avatar-ring"><div class="avatar-core"><span class="avatar-initials">QM</span></div></div>
+        <div class="orbit-item" title="Development">&lt;/&gt;</div>
+        <div class="orbit-item" title="Design">✎</div>
+        <div class="orbit-item" title="IT Support">⚙</div>
+        <div class="orbit-item" title="Content">▶</div>
+      </div>
+    </section>
+
+    <section id="services">
+      <div class="eyebrow">What I do</div>
+      <h2>Services I offer</h2>
+      <p class="section-intro">Four areas I actually work in — not a wishlist.</p>
+      <div class="services-grid">
+        <div class="service-card">
+          <div class="service-icon">⚙</div>
+          <h3>IT Support &amp; Troubleshooting</h3>
+          <p>Windows installs, software setup, hardware fixes and general tech support.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">&lt;/&gt;</div>
+          <h3>Web Development</h3>
+          <p>Responsive sites and apps built with HTML, CSS, JavaScript, Python and Django.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">✎</div>
+          <h3>Graphic Design &amp; Branding</h3>
+          <p>Logos, posters, flyers and social media assets — Photoshop, CorelDRAW, Canva.</p>
+        </div>
+        <div class="service-card">
+          <div class="service-icon">▶</div>
+          <h3>Content &amp; Social Media</h3>
+          <p>Tech tutorials and social content — the same work I do for my own channel.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="portfolio">
+      <div class="eyebrow">Selected work</div>
+      <h2>Portfolio</h2>
+      <p class="section-intro">Split by discipline — real projects, not stock demos.</p>
+
+      <div class="tabs">
+        <button class="tab active" data-tab="dev">Development</button>
+        <button class="tab" data-tab="design">Design</button>
+        <button class="tab" data-tab="support">IT Support</button>
+      </div>
+
+      <div class="project-panel active" id="dev">
+        <div class="p-card">
+          <img src="assets/leafpoint-app.jpg" alt="LeafPoint local marketplace app screenshot">
+          <div class="p-body">
+            <div class="p-tag">HTML · CSS · JavaScript</div>
+            <h3>LeafPoint — Local Marketplace App</h3>
+            <p>Mobile-first buy/sell concept: listing creation, photo upload, favorites, category filters.</p>
+            <div class="links"><a href="#">Live site →</a><a href="#">GitHub →</a></div>
+            <div class="p-note">Host on GitHub Pages, then swap in the link + a real screenshot</div>
+          </div>
+        </div>
+        <div class="p-card">
+          <div class="p-noimg">Turning Heads — screenshot pending</div>
+          <div class="p-body">
+            <div class="p-tag">HTML · CSS · JavaScript</div>
+            <h3>Turning Heads — Salon Website</h3>
+            <p>Client site for a hair &amp; beauty studio: gallery, scroll animation, WhatsApp booking.</p>
+            <div class="links"><a href="#">Live site →</a><a href="#">GitHub →</a></div>
+            <div class="p-note">Host on GitHub Pages, then swap in the link + a real screenshot</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-panel" id="design">
+        <div class="p-card">
+          <img src="assets/rise-poster.jpg" alt="WONJAC Rehabilitation Trust — RISE campaign poster">
+          <div class="p-body">
+            <div class="p-tag">Campaign Poster</div>
+            <h3>WONJAC Rehabilitation Trust — "RISE"</h3>
+            <p>Anti-drug awareness poster: hand-lettered graffiti type, full brand system.</p>
+          </div>
+        </div>
+        <div class="p-card">
+          <img src="assets/wonjac-security.jpg" alt="WONJAC Security Trust services flyer">
+          <div class="p-body">
+            <div class="p-tag">Service Flyer</div>
+            <h3>WONJAC Security Trust — Services</h3>
+            <p>Seven-service info layout for a security company, built for clarity at a glance.</p>
+          </div>
+        </div>
+        <div class="p-card">
+          <img src="assets/stop-drugs.jpg" alt="WONJAC Stop Drugs PSA poster">
+          <div class="p-body">
+            <div class="p-tag">PSA Poster</div>
+            <h3>WONJAC — "Stop Drugs"</h3>
+            <p>Social messaging poster, same brand system as the RISE campaign.</p>
+          </div>
+        </div>
+        <div class="p-card">
+          <img src="assets/deluxe-business-village.jpg" alt="DELUXE Tech Business Village promo graphic">
+          <div class="p-body">
+            <div class="p-tag">Brand / Promo</div>
+            <h3>DELUXE Tech — "Business Village"</h3>
+            <p>Promo graphic for my own tech brand's content series.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="project-panel" id="support">
+        <div class="p-card">
+          <div class="p-noimg">Add a case</div>
+          <div class="p-body">
+            <div class="p-tag">Troubleshooting</div>
+            <h3>[ Case name ]</h3>
+            <p>Short before/after: what was broken, what you fixed, how long it took.</p>
+            <div class="p-note">Even one real, informal case is worth adding here</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="facts-strip">
+        <div class="fact"><strong>2022</strong><span>Started freelancing</span></div>
+        <div class="fact"><strong>6/6</strong><span>O-Level passes</span></div>
+        <div class="fact"><strong>4</strong><span>Design projects shown</span></div>
+        <div class="fact"><strong>2</strong><span>Dev projects in progress</span></div>
+      </div>
+    </section>
+
+    <section id="content">
+      <div class="eyebrow">Beyond the work</div>
+      <h2>I teach what I learn</h2>
+      <div class="content-block">
+        <img src="assets/deluxe-business-village.jpg" alt="DELUXE Tech content series promo">
+        <div class="content-text">
+          <h3>Tech tips &amp; tutorials</h3>
+          <p>I run a channel covering tech tips and tutorials, and post the same kind of content on TikTok. It's part of how I stay sharp — explaining something is the fastest way to find out if you actually understand it.</p>
+          <div class="platform-links">
+            <a href="#">YouTube — add link</a>
+            <a href="#">TikTok @meshtech254</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about" style="border-bottom:1px solid var(--border);">
+      <div class="eyebrow">Background</div>
+      <h2>Experience</h2>
+      <div class="exp-item">
+        <div class="exp-time">2022 — Present</div>
+        <div>
+          <h3>IT Support &amp; Digital Services Assistant</h3>
+          <div class="exp-org">Self-Employed / Family Business — Harare, Zimbabwe</div>
+          <ul>
+            <li>Assisted with basic troubleshooting and software installation</li>
+            <li>Handled customer inquiries via phone, WhatsApp and in person</li>
+            <li>Designed posters, flyers, logos and promotional material</li>
+            <li>Managed social media pages and content</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" style="border-bottom:none;">
+      <div class="eyebrow">Let's talk</div>
+      <h2>Get in touch</h2>
+      <div class="contact-grid">
+        <div class="contact-info-card">
+          <h3>Contact details</h3>
+          <a href="mailto:makotanyaradzwa@gmail.com">makotanyaradzwa@gmail.com</a>
+          <a href="tel:+263786263741">078 626 3741</a>
+          <div class="line">Hatfield, Harare, Zimbabwe</div>
+          <div class="line">GitHub: github.com/[your-username]</div>
+        </div>
+        <form onsubmit="return false;">
+          <input type="text" placeholder="Your name" required>
+          <input type="email" placeholder="Your email" required>
+          <textarea placeholder="Your message" required></textarea>
+          <button class="btn btn-primary" type="submit">Send message</button>
+          <div class="form-note">Static form — connect to Formspree or a mailto: link before this goes live</div>
+        </form>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>© 2026 Quinton Makombera — built with HTML, CSS &amp; JS</footer>
+
+<script>
+  // sidebar toggle (mobile)
+  const toggle = document.getElementById('sidebarToggle');
+  const sidebar = document.getElementById('sidebar');
+  toggle.addEventListener('click', ()=> sidebar.classList.toggle('open'));
+  document.querySelectorAll('.sidenav a').forEach(link=>{
+    link.addEventListener('click', ()=>{
+      sidebar.classList.remove('open');
+      document.querySelectorAll('.sidenav a').forEach(a=>a.classList.remove('active'));
+      link.classList.add('active');
+    });
+  });
+
+  // project tabs
+  document.querySelectorAll('.tab').forEach(tab=>{
+    tab.addEventListener('click', ()=>{
+      document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+      document.querySelectorAll('.project-panel').forEach(p=>p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById(tab.dataset.tab).classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>
